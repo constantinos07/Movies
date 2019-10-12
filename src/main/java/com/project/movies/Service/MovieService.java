@@ -1,6 +1,7 @@
 package com.project.movies.Service;
 
 import com.project.movies.Entity.Movie;
+import com.project.movies.Exception.MovieNotFoundException;
 import com.project.movies.dao.MovieDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,13 +26,13 @@ public class MovieService {
     }
 
     @Transactional
-    public Movie findMovieById(int movieId) {
+    public Movie getMovie(int movieId) throws MovieNotFoundException {
         Optional<Movie> movie = movieDAO.findMovieById(movieId);
 
         if (movie.isPresent()) {
             return movie.get();
         } else {
-            throw new RuntimeException("Movie with Id:" + movieId + " does not exist");
+            throw new MovieNotFoundException("Movie with Id:" + movieId + " does not exist");
         }
     }
 

@@ -1,6 +1,7 @@
 package com.project.movies.Service;
 
 import com.project.movies.Entity.Movie;
+import com.project.movies.Exception.MovieNotFoundException;
 import com.project.movies.dao.MovieDAO;
 import org.junit.Before;
 import org.junit.Test;
@@ -30,14 +31,14 @@ public class MovieServiceTest {
     }
 
     @Test
-    public void findsMovieSuccessfullyWhenMovieIsRegistered() {
+    public void findsMovieSuccessfullyWhenMovieIsRegistered() throws Exception {
         when(movieDAOMock.findMovieById(MOVIE_ID)).thenReturn(Optional.of(movieMock));
-        assertNotNull(movieService.findMovieById(MOVIE_ID));
+        assertNotNull(movieService.getMovie(MOVIE_ID));
     }
 
-    @Test (expected = RuntimeException.class)
-    public void findMovieThrowsExceptionWhenMovieIsNotRegistered() {
-        movieService.findMovieById(- MOVIE_ID);
+    @Test (expected = MovieNotFoundException.class)
+    public void findMovieThrowsExceptionWhenMovieIsNotRegistered() throws Exception {
+        movieService.getMovie(- MOVIE_ID);
     }
 
 }
