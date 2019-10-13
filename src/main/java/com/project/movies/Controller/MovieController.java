@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
-@RequestMapping("/api")
+@RequestMapping("/movie")
 public class MovieController {
 
     private MovieService movieService;
@@ -21,25 +21,32 @@ public class MovieController {
         this.movieService = movieService;
     }
 
-    @GetMapping("/movie/{movieId}")
-    public Movie getMovie(@PathVariable int movieId) throws MovieNotFoundException {
-        return movieService.getMovie(movieId);
-    }
-
-    @GetMapping("/movie/list")
+    @GetMapping("/list")
     public String getMovieList(Model model) {
         List<Movie> movies = movieService.getAllMovies();
         model.addAttribute("movies", movies);
         return "movieList";
     }
 
-    @PostMapping("/movie/save")
-    public Movie saveMovie(@RequestBody Movie movie) {
-        // set id to 0 forcing to save the new movie
-        // instead of updating the db record
-        movie.setId(0);
+    @GetMapping("/showFormForNewMovie")
+    public String showFormForNewMovie(Model model) {
+        Movie movie = new Movie();
+        model.addAttribute("movie", movie);
+        return "movie-form";
+    }
+
+    @GetMapping("/showFormForMovieUpdate")
+    public String showFormForMovieUpdate(@RequestParam("movieId") int id,
+                                         Model model) throws MovieNotFoundException {
+        Movie movie = movieService.getMovie(id);
+        model.addAttribute("movie", movie);
+        return "movie-form";
+    }
+
+    @PostMapping("/save")
+    public String saveMovie(@ModelAttribute("movie") Movie movie) {
         movieService.saveMovie(movie);
-        return movie;
+        return "redirect:/movie/list";
     }
 
     @DeleteMapping("movie/{movieId}")
@@ -52,11 +59,5 @@ public class MovieController {
         }
         movieService.deleteMovie(movieId);
         return "Delete movie id - " + movieId;
-    }
-
-    @PutMapping("/movie")
-    public Movie updateMovie(@RequestBody Movie movie) {
-        movieService.saveMovie(movie);
-        return movie;
     }
 }
