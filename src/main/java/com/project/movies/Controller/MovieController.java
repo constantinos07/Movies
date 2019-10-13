@@ -4,11 +4,13 @@ import com.project.movies.Entity.Movie;
 import com.project.movies.Exception.MovieNotFoundException;
 import com.project.movies.Service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
+@Controller
 @RequestMapping("/api")
 public class MovieController {
 
@@ -25,8 +27,10 @@ public class MovieController {
     }
 
     @GetMapping("/movie/list")
-    public List<Movie> getMovieList() {
-        return movieService.getAllMovies();
+    public String getMovieList(Model model) {
+        List<Movie> movies = movieService.getAllMovies();
+        model.addAttribute("movies", movies);
+        return "movieList";
     }
 
     @PostMapping("/movie/save")
