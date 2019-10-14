@@ -9,7 +9,7 @@ DROP TABLE IF EXISTS `movie`;
 
 CREATE TABLE `movie` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `movie_name` varchar(45) DEFAULT NULL,
+  `movie_name` varchar(45) NOT NULL,
   `release_year` int(4) NOT NULL,
   `rating` double default 0,
   `genre` varchar(45) DEFAULT NULL,

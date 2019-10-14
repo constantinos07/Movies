@@ -6,8 +6,10 @@ import com.project.movies.Service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -36,28 +38,29 @@ public class MovieController {
     }
 
     @GetMapping("/showFormForMovieUpdate")
-    public String showFormForMovieUpdate(@RequestParam("movieId") int id,
-                                         Model model) throws MovieNotFoundException {
+    public String showFormForMovieUpdate(
+            @RequestParam("movieId") int id,
+             Model model) throws MovieNotFoundException {
         Movie movie = movieService.getMovie(id);
         model.addAttribute("movie", movie);
         return "movie-form";
     }
 
     @PostMapping("/save")
-    public String saveMovie(@ModelAttribute("movie") Movie movie) {
+    public String saveMovie(
+            @ModelAttribute("movie") @Valid Movie movie,
+            BindingResult bindingResult) {
+
+        if(bindingResult.hasErrors()) {
+            return "movie-form";
+        }
         movieService.saveMovie(movie);
         return "redirect:/movie/list";
     }
 
-    @DeleteMapping("movie/{movieId}")
-    public String deleteMovie(@PathVariable int movieId) throws MovieNotFoundException {
-        Movie movie = movieService.getMovie(movieId);
-
-        if (movie == null) {
-            // create a custom exception
-            throw new MovieNotFoundException("Movie id not found: " + movieId);
-        }
+    @GetMapping("/delete")
+    public String deleteMovie(@RequestParam ("movieId") int movieId) {
         movieService.deleteMovie(movieId);
-        return "Delete movie id - " + movieId;
+        return "redirect:/movie/list";
     }
 }
