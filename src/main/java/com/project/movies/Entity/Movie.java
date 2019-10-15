@@ -1,14 +1,15 @@
 package com.project.movies.Entity;
 
+import com.project.movies.Validation.Genre;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "movie")
@@ -19,23 +20,24 @@ public class Movie {
     @Column(name = "id")
     private int id;
 
-    @NotEmpty(message = "Movie name is mandatory")
+    @NotBlank(message = "Movie name is mandatory")
     @Column(name = "movie_name")
     private String movieName;
 
+    @Min(value = 1900, message = "Movie release year must be greater or equal to 1900")
     @Column(name = "release_year")
     private int releaseYear;
 
     @Column(name = "rating")
     private double rating;
 
+    @Genre(value = "", message = "invalid movie genre")
     @Column(name = "genre")
     private String genre;
 
-    //private List<Actor> crew;
+    @NotBlank(message = "Plot is mandatory")
     @Column(name = "plot")
     private String plot;
-    //private Reviews reviews;
 
     public Movie() {
     }

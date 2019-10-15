@@ -43,12 +43,20 @@
                 <input type="text" th:field="*{genre}"
                        class="form-control mb-4 col-4" placeholder="Genre">
 
+                <span th:if="${#fields.hasErrors('genre')}"
+                      th:errors="*{genre}"
+                      class="badge badge-danger ml-2 mb-4"></span>
+
             </div>
 
             <div class="form-inline">
 
                 <input type="text" th:field="*{plot}"
                        class="form-control mb-4 col-4" placeholder="Plot">
+
+                <span th:if="${#fields.hasErrors('plot')}"
+                      th:errors="*{plot}"
+                      class="badge badge-danger ml-2 mb-4"></span>
 
             </div>
 
