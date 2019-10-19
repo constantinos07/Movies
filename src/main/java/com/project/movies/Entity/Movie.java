@@ -31,7 +31,7 @@ public class Movie {
     @Column(name = "rating")
     private double rating;
 
-    @Genre(value = "", message = "invalid movie genre")
+    @Genre(value = "", message = "Invalid movie genre")
     @Column(name = "genre")
     private String genre;
 

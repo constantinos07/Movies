@@ -22,49 +22,54 @@
             <!-- Add hidden form field to handle update -->
             <input type="hidden" th:field="*{id}" />
 
+            <label for="movieName">Name</label>
             <div class="form-inline">
-                <input type="text" th:field="*{movieName}"
-                       class="form-control mb-4 col-4" placeholder="Movie name">
+                <input type="text" th:field="*{movieName}" id="movieName"
+                       class="form-control mb-4 col-4" placeholder="Movie name"/>
 
                 <span th:if="${#fields.hasErrors('movieName')}"
                       th:errors="*{movieName}"
-                      class="badge badge-danger ml-2 mb-4"></span>
+                      class="badge badge-danger ml-2 mb-4">
+                </span>
             </div>
 
+            <label for="releaseYear">Release Year</label>
             <div class="form-inline">
+                <input type="text" th:field="*{releaseYear}" id="releaseYear"
+                       class="form-control mb-4 col-4" placeholder="0"/>
 
-                <input type="text" th:field="*{releaseYear}"
-                       class="form-control mb-4 col-4" placeholder="Release Year">
-
+                <span th:if="${#fields.hasErrors('releaseYear')}"
+                      th:errors="*{releaseYear}"
+                      class="badge badge-danger ml-2 mb-4">
+                </span>
             </div>
 
+            <label for="genre">Genre</label>
             <div class="form-inline">
-
-                <input type="text" th:field="*{genre}"
-                       class="form-control mb-4 col-4" placeholder="Genre">
+                <input type="text" th:field="*{genre}" id="genre"
+                       class="form-control mb-4 col-4" placeholder="Genre"/>
 
                 <span th:if="${#fields.hasErrors('genre')}"
                       th:errors="*{genre}"
-                      class="badge badge-danger ml-2 mb-4"></span>
-
+                      class="badge badge-danger ml-2 mb-4">
+                </span>
             </div>
 
+            <label for="plot">Plot</label>
             <div class="form-inline">
-
-                <input type="text" th:field="*{plot}"
-                       class="form-control mb-4 col-4" placeholder="Plot">
+                <input type="text" th:field="*{plot}" id="plot"
+                       class="form-control mb-4 col-4" placeholder="Plot"/>
 
                 <span th:if="${#fields.hasErrors('plot')}"
                       th:errors="*{plot}"
-                      class="badge badge-danger ml-2 mb-4"></span>
-
+                      class="badge badge-danger ml-2 mb-4">
+                </span>
             </div>
 
+            <label for="rating">Rating</label>
             <div class="form-inline">
-
-                <input type="text" th:field="*{rating}"
-                       class="form-control mb-4 col-4" placeholder="Rating">
-
+                <input type="text" th:field="*{rating}" id="rating"
+                       class="form-control mb-4 col-4"/>
             </div>
 
             <button type="submit" class="btn btn-info col-2">Save</button>
@@ -75,5 +80,4 @@
         <a th:href="@{/movie/list}">Back to Movie List</a>
     </div>
 </body>
-
 </html>

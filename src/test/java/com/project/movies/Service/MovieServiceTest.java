@@ -9,6 +9,8 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import java.lang.reflect.Array;
+import java.util.Collections;
 import java.util.Optional;
 
 import static org.junit.Assert.assertNotNull;
@@ -31,14 +33,19 @@ public class MovieServiceTest {
     }
 
     @Test
-    public void findsMovieSuccessfullyWhenMovieIsRegistered() throws Exception {
+    public void retrievesMovieSuccessfullyWhenMovieIsRegistered() throws Exception {
         when(movieDAOMock.findMovieById(MOVIE_ID)).thenReturn(Optional.of(movieMock));
         assertNotNull(movieService.getMovie(MOVIE_ID));
     }
 
     @Test (expected = MovieNotFoundException.class)
-    public void findMovieThrowsExceptionWhenMovieIsNotRegistered() throws Exception {
+    public void getMovieThrowsExceptionWhenMovieIsNotRegistered() throws Exception {
         movieService.getMovie(- MOVIE_ID);
     }
 
+    @Test
+    public void retrievesAllMoviesSuccessfully() {
+        when(movieDAOMock.getMovies()).thenReturn(Collections.singletonList(movieMock));
+        assertNotNull(movieService.getAllMovies());
+    }
 }
